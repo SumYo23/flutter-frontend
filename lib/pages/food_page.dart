@@ -50,7 +50,7 @@ class _FoodPageState extends State<FoodPage> {
           : Consumer<FoodProvider>(
         builder: (context, foodProvider, _) => Column(
           children: [
-            const SizedBox(height: 59),
+            const SizedBox(height: 60),
             Container(
                 height: 200,
                 child: Center(
