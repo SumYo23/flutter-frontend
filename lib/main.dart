@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
             create: (context) =>
-                FavoriteProvider(favoriteRepository: FavoriteRepository())
+                FavoriteProvider(favoriteRepository: FavoriteRepository(),
+                )
         ),
         ChangeNotifierProvider(create: (context) => TabProvider()),
         ChangeNotifierProvider(
@@ -99,7 +100,6 @@ class _TabPageState extends State<TabPage> {
   @override
   void initState() {
     super.initState();
-
     Future.microtask(() {
       context.read<TokenProvider>().fetchToken();
     });

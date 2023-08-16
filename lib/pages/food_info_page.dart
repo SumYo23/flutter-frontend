@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:v2/styles/text_style.dart';
 import '../models/food_model.dart';
 import '../providers/favorite_provider.dart';
-import '../providers/food_provider.dart';
 import '../providers/ingredient_provider.dart';
 import 'package:provider/provider.dart';
-import '../styles/text_style.dart';
 
 class FoodInfoPage extends StatefulWidget {
   final Food food;
-
-  FoodInfoPage({required this.food});
+  final bool isFavoritePage;
+  FoodInfoPage({required this.food,required this.isFavoritePage});
 
   @override
   _FoodInfoPageState createState() => _FoodInfoPageState();
 }
 
 class _FoodInfoPageState extends State<FoodInfoPage> {
-  ScrollController _scrollController = ScrollController();
   bool showDetails = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +37,8 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                 Container(
                 height: MediaQuery.of(context).size.height / 2.5,
                 width: double.infinity,
-                child: Image.asset(
-                  widget.food.imageUrl.toString(),
+                child: Image.network(
+                  widget.food.image_route!,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -90,20 +87,15 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                       ],
                     ),
                     child: IconButton(
+                      icon: Icon(widget.isFavoritePage ? Icons.close : Icons.favorite),
                       onPressed: () {
-                        setState(() {
-                          Provider.of<FoodProvider>(context, listen: false)
-                              .toggleFavoriteStatus(widget.food.name!);
-                        });
-                        print(widget.food.isFavorite);
+                        if (widget.isFavoritePage) {
+                          Provider.of<FavoriteProvider>(context, listen: false).DELFavorite(widget.food);
+
+                        } else {
+                          Provider.of<FavoriteProvider>(context, listen: false).ADDFavorite(widget.food);
+                        }
                       },
-                      icon: Icon(
-                        widget.food.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: widget.food.isFavorite ? Colors.black : Colors.black,
-                        size: 25,
-                      ),
                     ),
                   )
                 ),
@@ -114,12 +106,14 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    widget.food.name.toString(),
-                    style:TextStyle(
-                      fontSize:24,
-                      fontWeight:FontWeight.w700,
-                      color:Color(0xFF192E51),
+                  Expanded(
+                    child: Text(
+                      widget.food.name.toString(),
+                      style:TextStyle(
+                        fontSize:24,
+                        fontWeight:FontWeight.w700,
+                        color:Color(0xFF192E51),
+                      ),
                     ),
                   ),
                 ],
@@ -213,9 +207,9 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.food.recipe?.length ?? 0,
+              itemCount: widget.food.recipes?.length ?? 0,
               itemBuilder: (context, index) {
-                FoodRecipe recipe = widget.food.recipe![index];
+                FoodRecipe recipe = widget.food.recipes![index];
                 return Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -237,8 +231,8 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                         ClipRRect(
                           borderRadius:
                           BorderRadius.circular(10.0), // 모서리 둥글기 지정
-                          child: Image.asset(
-                            'assets/tree.png',
+                          child: Image.network(
+                            recipe.image_route.toString(),
                             fit: BoxFit.fill,
                             height: 90,
                             width: 90,
@@ -251,18 +245,18 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                '${recipe.process}',
+                                '${recipe.number}',
                                 style:TextStyle(
                                   fontSize:20,
                                   fontWeight:FontWeight.w700,
                                   color:Color(0xFF192E51),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 5),
                               Text(
-                                '설명:\n ${recipe.describe}',
+                                '${recipe.detail}',
                                 style:TextStyle(
-                                  fontSize:15,
+                                  fontSize:12,
                                   fontWeight:FontWeight.w700,
                                   color:Color(0xFF5A5A6C),
                                 ),
@@ -294,7 +288,7 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
     return Wrap(
       spacing: 8.0,
       runSpacing: 4.0,
-      children: widget.food.stuffs!.map((FoodIngredient stuff) {
+      children: widget.food.ingredients!.map((FoodIngredient stuff) {
         return ActionChip(
           label: Padding(
             padding: EdgeInsets.all(5.0),
@@ -343,7 +337,7 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
           padding: EdgeInsets.all(0), // set the padding to minimum
           scrollDirection: Axis.vertical,
           //controller: _scrollController,
-          itemCount: widget.food.stuffs!.length,
+          itemCount: widget.food.ingredient!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 1, // set the number of items per row
             mainAxisSpacing: 0.0, // set the vertical gap to minimum
@@ -357,10 +351,11 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                     .min, // make the column occupy the least space possible
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
                   Container(
-                      width: 150,
+
                       child: Text(
-                          widget.food.stuffs![index].name!,
+                          widget.food.ingredient![index],
                           style:TextStyle(
                             fontSize:12,
                             fontWeight:FontWeight.w500,
@@ -369,16 +364,16 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                       )
 
                   ),
-                  Container(
-                      child: Text(
-                          '${widget.food.stuffs![index].quantity}',
-                          style:TextStyle(
-                            fontSize:12,
-                            fontWeight:FontWeight.w500,
-                            color:Color(0xFF192E51),
-                          )
-                      )
-                  ),
+                  // Container(
+                  //     child: Text(
+                  //         '${widget.food.ingredients![index].quantity}',
+                  //         style:TextStyle(
+                  //           fontSize:12,
+                  //           fontWeight:FontWeight.w500,
+                  //           color:Color(0xFF192E51),
+                  //         )
+                  //     )
+                  // ),
                 ],
               ),
             );

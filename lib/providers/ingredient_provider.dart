@@ -1,19 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../models/ingredient_model.dart';
 import '../repositories/ingredient_repository.dart';
 
 class IngredientProvider with ChangeNotifier {
   final IngredientRepository ingredientRepository;
-  List<Ingredient> _ingredients = [
-    // Ingredient(name: '마늘', imageUrl: 'imageUrl', quantity: 1, createdAt: 1),
-    // Ingredient(name: '고기', imageUrl: 'imageUrl', quantity: 1, createdAt: 2),
-    // Ingredient(name: '토마토', imageUrl: 'imageUrl', quantity: 2, createdAt: 3),
-    // Ingredient(name: '간장', imageUrl: 'imageUrl', quantity: 1, createdAt: 4),
-    // Ingredient(name: '미역', imageUrl: 'imageUrl', quantity: 1, createdAt: 5),
-  ];
-
+  List<Ingredient> _ingredients = [];
   IngredientProvider({required this.ingredientRepository});
 
   List<Ingredient> get ingredients => _ingredients;

@@ -1,16 +1,16 @@
 import 'dart:convert';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:v2/repositories/token_repository.dart';
 import '../models/ingredient_model.dart';
 
 class IngredientRepository {
-
+  Future<String> TOKEN = TokenRepository().getDeviceId();
   Future<List<Ingredient>> fetchIngredients() async {
 
     final url = 'http://223.130.139.200/api/refrigerator/list/';
     final headers = {
-      'Authorization': 'abcd1234',
+      'Authorization': TOKEN.toString(),
       'Content-Type': 'application/json'
     };
 
@@ -83,7 +83,7 @@ class IngredientRepository {
         headers: {
           //'Content-Length' : json.decode(request).length.toString(),
           'Content-Type': 'application/json',
-          'Authorization': "abcd1234",
+          'Authorization': TOKEN.toString(),
         },
       );
 
@@ -103,7 +103,7 @@ class IngredientRepository {
 
     final url = 'http://223.130.139.200/api/refrigerator/list/$ingredient/';
     final headers = {
-      'Authorization': 'abcd1234',
+      'Authorization': TOKEN.toString(),
       'Content-Type': 'application/json'
     };
     final body = jsonEncode({
@@ -125,7 +125,7 @@ class IngredientRepository {
   Future<void> deleteIngredient(String ingredient) async {
     final url = 'http://223.130.139.200/api/refrigerator/list/$ingredient/';
     final headers = {
-      'Authorization': 'abcd1234',
+      'Authorization': TOKEN.toString(),
       'Content-Type': 'application/json'
     };
 
@@ -146,7 +146,7 @@ class IngredientRepository {
 
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://52.79.73.147:8000/image_detection/'),
+      Uri.parse('http://223.130.134.87/image_detection/'),
     );
 
     request.headers.addAll({
@@ -160,10 +160,9 @@ class IngredientRepository {
 
     final response = await request.send();
     final responseData = await http.Response.fromStream(response);
-    final extractedData =
-    json.decode(responseData.body) as Map<String, dynamic>;
+    final extractedData = json.decode(utf8.decode(responseData.bodyBytes)) as Map<String, dynamic>;
     final foods = extractedData['foods'] as List<dynamic>;
-
+    print(foods[0]);
     return foods;
   }
 

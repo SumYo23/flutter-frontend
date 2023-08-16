@@ -1,79 +1,91 @@
 class Food {
+  late int id;
+  String? image_route;
   String? name;
-  String? imageUrl;
-  String? description;
-  List<FoodIngredient>? stuffs;
-  List<FoodRecipe>? recipe;
-  bool isFavorite = false;
+  late int percent;
+  String? status;
+  List<String>? ingredient;
+  List<FoodRecipe>? recipes;
+  List<FoodIngredient>? ingredients;
 
   Food(
-      {required this.name,
-      required this.imageUrl,
-      this.description,
-      this.stuffs,
-      this.recipe});
+      {required this.id,
+      required this.image_route,
+        required this.name,
+        required this.percent,
+        required this.status,
+        required this.ingredient,
+        required this.recipes,
+        required this.ingredients,
+      });
 
   Food.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    image_route = json['image_route'];
     name = json['name'];
-    imageUrl = json['imageUrl'];
-    description = json['description'];
-    if (json['stuffs'] != null) {
-      stuffs = List<FoodIngredient>.from(
-          json['stuffs'].map((x) => FoodIngredient.fromJson(x)));
+    percent = json['percent'];
+    status = json['status'];
+    ingredient = List<String>.from(json['ingredient']);
+    if (json['recipes'] != null) {
+      recipes = List<FoodRecipe>.from(
+          json['recipes'].map((x) => FoodRecipe.fromJson(x)));
     }
 
-    if (json['recipe'] != null) {
-      recipe = List<FoodRecipe>.from(
-          json['recipe'].map((x) => FoodRecipe.fromJson(x)));
+    if (json['ingredients'] != null) {
+      ingredients = List<FoodIngredient>.from(
+          json['ingredients'].map((x) => FoodIngredient.fromJson(x)));
     }
   }
 
   // parse SampleModel to json
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['image_route'] = image_route;
     data['name'] = name;
-    data['imageUrl'] = imageUrl;
-    data['description'] = description;
-    data['stuffs'] = stuffs?.map((x) => x.toJson()).toList();
-    data['recipe'] = recipe?.map((x) => x.toJson()).toList();
+    data['percent'] = percent;
+    data['status'] = status;
+    data['ingredient'] = ingredient;
+    data['recipes'] = recipes?.map((x) => x.toJson()).toList();
+    data['ingredients'] = ingredients?.map((x) => x.toJson()).toList();
     return data;
   }
 }
 
 class FoodIngredient {
   String? name;
-  int? quantity;
 
-  FoodIngredient({required this.name, required this.quantity});
+  FoodIngredient({required this.name});
 
   FoodIngredient.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    quantity = json['quantity'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
-    data['quantity'] = quantity;
     return data;
   }
 }
 
 class FoodRecipe {
-  String? process;
-  String? describe;
+  late int number;
+  String? detail;
+  String? image_route;
 
-  FoodRecipe({required this.process, required this.describe});
+  FoodRecipe({required this.number, required this.detail, required this.image_route});
 
   FoodRecipe.fromJson(Map<String, dynamic> json) {
-    process = json['process'];
-    describe = json['describe'];
+    number = json['number'];
+    detail = json['detail'];
+    image_route = json['image_route'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['process'] = process;
-    data['describe'] = describe;
+    data['number'] = number;
+    data['detail'] = detail;
+    data['image_route'] = image_route;
     return data;
   }
 }

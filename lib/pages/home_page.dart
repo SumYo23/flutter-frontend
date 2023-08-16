@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/token_provider.dart';
 import 'food_page.dart';
 
 class HomePage extends StatefulWidget {

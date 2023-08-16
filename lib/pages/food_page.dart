@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/bar_model.dart';
 import '../providers/food_provider.dart';
-import '../styles/text_style.dart';
 import '../view_model/food_view.dart';
-import 'food_info_page.dart';
 
 class FoodPage extends StatefulWidget {
   @override
@@ -13,25 +10,25 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  // var _isInit = true;
-  // var _isLoading = false;
+  var _isInit = true;
+  var _isLoading = false;
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     Provider.of<FoodProvider>(context).getFoods().then((_) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     });
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  //
-  // }
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<FoodProvider>(context).getFoods().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+
+  }
 
   @override
   void initState() {
@@ -48,7 +45,9 @@ class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<FoodProvider>(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Consumer<FoodProvider>(
         builder: (context, foodProvider, _) => Column(
           children: [
             const SizedBox(height: 60),
@@ -56,25 +55,25 @@ class _FoodPageState extends State<FoodPage> {
                 height: 200,
                 child: Center(
                     child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/mydog.png',
-                      height: 130, // 원하는 이미지 높이 설정
-                      width: 130, // 원하는 이미지 너비 설정
-                    ),
-                    Text("오늘의 추천 음식이에요!",
-                        style:TextStyle(
-                            fontSize:20,
-                            fontWeight:FontWeight.w700,
-                            color:Color(0xFF192E51)
-                        )
-                    ),
-                  ],
-                ))),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/mydog.png',
+                          height: 130, // 원하는 이미지 높이 설정
+                          width: 130, // 원하는 이미지 너비 설정
+                        ),
+                        Text("오늘의 추천 음식이에요!",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF192E51))),
+                      ],
+                    ))),
             Expanded(
-              //height:500,
-              child: FoodViewModel(foods: foodProvider.foods),
+              child: FoodViewModel(
+                foods: foodProvider.foods,
+                isFavoritePage: false,
+              ),
             ),
           ],
         ),
@@ -82,4 +81,5 @@ class _FoodPageState extends State<FoodPage> {
       //bottomNavigationBar: MyBar(),
     );
   }
+
 }
