@@ -10,7 +10,7 @@ class IngredientRepository {
 
     final url = 'http://223.130.139.200/api/refrigerator/list/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 
@@ -83,7 +83,7 @@ class IngredientRepository {
         headers: {
           //'Content-Length' : json.decode(request).length.toString(),
           'Content-Type': 'application/json',
-          'Authorization': TOKEN.toString(),
+          'Authorization': await TOKEN,
         },
       );
 
@@ -103,7 +103,7 @@ class IngredientRepository {
 
     final url = 'http://223.130.139.200/api/refrigerator/list/$ingredient/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
     final body = jsonEncode({
@@ -125,7 +125,7 @@ class IngredientRepository {
   Future<void> deleteIngredient(String ingredient) async {
     final url = 'http://223.130.139.200/api/refrigerator/list/$ingredient/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 
@@ -149,9 +149,7 @@ class IngredientRepository {
       Uri.parse('http://223.130.134.87/image_detection/'),
     );
 
-    request.headers.addAll({
-      'Authorization': 'Token de2cc05ea1410365006ba58d1ad8d77a20f1329e',
-    });
+    request.headers.addAll({});
 
     request.files.add(await http.MultipartFile.fromPath(
       'image',

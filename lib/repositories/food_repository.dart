@@ -8,7 +8,7 @@ class FoodRepository {
   Future<List<Food>> fetchFoods() async {
     final url = 'http://223.130.139.200/api/cook/list/30/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 

@@ -8,7 +8,7 @@ class FavoriteRepository {
   Future<List<Food>> fetchFavorite() async {
     final url = 'http://223.130.139.200/api/like/list/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 
@@ -33,7 +33,7 @@ class FavoriteRepository {
   Future<void> addFavorite(Food food) async {
     final url = 'http://223.130.139.200/api/like/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 
@@ -58,7 +58,7 @@ class FavoriteRepository {
   Future<void> delFavorite(Food food) async {
     final url = 'http://223.130.139.200/api/like/';
     final headers = {
-      'Authorization': TOKEN.toString(),
+      'Authorization': await TOKEN,
       'Content-Type': 'application/json'
     };
 
