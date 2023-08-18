@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:v2/pages/favorite_page.dart';
 import 'package:v2/pages/food_page.dart';
 import 'package:v2/pages/home_page.dart';
+import 'package:v2/pages/loading_page.dart';
 import 'package:v2/providers/favorite_provider.dart';
 import 'package:v2/providers/tab_provider.dart';
 import 'package:v2/providers/token_provider.dart';

@@ -20,6 +20,7 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
   @override
   Widget build(BuildContext context) {
     var ingredientProvider = Provider.of<IngredientProvider>(context);
+    var favoriteProvider = Provider.of<FavoriteProvider>(context);
 
     Map<String, int> ingredients = {};
     for (var ingredient in ingredientProvider.ingredients) {
