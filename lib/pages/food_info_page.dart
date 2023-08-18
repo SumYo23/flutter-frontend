@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 class FoodInfoPage extends StatefulWidget {
   final Food food;
   final bool isFavoritePage;
-  FoodInfoPage({required this.food,required this.isFavoritePage});
+
+  FoodInfoPage({required this.food, required this.isFavoritePage});
 
   @override
   _FoodInfoPageState createState() => _FoodInfoPageState();
@@ -15,7 +16,6 @@ class FoodInfoPage extends StatefulWidget {
 
 class _FoodInfoPageState extends State<FoodInfoPage> {
   bool showDetails = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +29,23 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Stack(
               children: <Widget>[
                 Container(
-                height: MediaQuery.of(context).size.height / 2.5,
-                width: double.infinity,
-                child: Image.network(
-                  widget.food.image_route!,
-                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height / 2.5,
+                  width: double.infinity,
+                  child: Image.network(
+                    widget.food.image_route!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
                 Positioned(
                   top: 40.0,
                   left: 20.0,
                   child: Container(
-                    height:40,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
@@ -70,35 +69,39 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                   ),
                 ),
                 Positioned(
-                  top: 40.0,
-                  right: 15.0,
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: IconButton(
-                      icon: Icon(widget.isFavoritePage ? Icons.close : Icons.favorite),
-                      onPressed: () {
-                        if (widget.isFavoritePage) {
-                          Provider.of<FavoriteProvider>(context, listen: false).DELFavorite(widget.food);
-
-                        } else {
-                          Provider.of<FavoriteProvider>(context, listen: false).ADDFavorite(widget.food);
-                        }
-                      },
-                    ),
-                  )
-                ),
+                    top: 40.0,
+                    right: 15.0,
+                    child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: IconButton(
+                        icon: Icon(widget.isFavoritePage
+                            ? Icons.close
+                            : Icons.favorite),
+                        onPressed: () {
+                          if (widget.isFavoritePage) {
+                            Provider.of<FavoriteProvider>(context,
+                                    listen: false)
+                                .DELFavorite(widget.food);
+                          } else {
+                            Provider.of<FavoriteProvider>(context,
+                                    listen: false)
+                                .ADDFavorite(widget.food);
+                          }
+                        },
+                      ),
+                    )),
               ],
             ),
             Container(
@@ -109,10 +112,10 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                   Expanded(
                     child: Text(
                       widget.food.name.toString(),
-                      style:TextStyle(
-                        fontSize:24,
-                        fontWeight:FontWeight.w700,
-                        color:Color(0xFF192E51),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF192E51),
                       ),
                     ),
                   ),
@@ -142,10 +145,10 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                     padding: EdgeInsets.only(top: 0, left: 30, right: 30),
                     child: Text(
                       '식재료',
-                      style:TextStyle(
-                        fontSize:16,
-                        fontWeight:FontWeight.w500,
-                        color:Color(0xFF5A5A6C),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF5A5A6C),
                       ),
                     ),
                   ),
@@ -158,11 +161,12 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 0.0, left: 30, right: 30),
-                    child: Text('More +',
-                      style:TextStyle(
-                        fontSize:16,
-                        fontWeight:FontWeight.w500,
-                        color:Color(0xFF5A5A6C),
+                    child: Text(
+                      'More +',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF5A5A6C),
                       ),
                     ),
                   ),
@@ -196,11 +200,12 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
             ),
             Container(
               padding: EdgeInsets.only(left: 30, right: 30, top: 0),
-              child: Text('레시피',
-                style:TextStyle(
-                  fontSize:16,
-                  fontWeight:FontWeight.w500,
-                  color:Color(0xFF5A5A6C),
+              child: Text(
+                '레시피',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF5A5A6C),
                 ),
               ),
             ),
@@ -227,44 +232,43 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
                   padding: EdgeInsets.all(10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius:
-                          BorderRadius.circular(10.0), // 모서리 둥글기 지정
-                          child: Image.network(
-                            recipe.image_route.toString(),
-                            fit: BoxFit.fill,
-                            height: 90,
-                            width: 90,
-                          ),
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0), // 모서리 둥글기 지정
+                        child: Image.network(
+                          recipe.image_route.toString(),
+                          fit: BoxFit.fill,
+                          height: 90,
+                          width: 90,
                         ),
-                        SizedBox(width: 15),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${recipe.number}',
-                                style:TextStyle(
-                                  fontSize:20,
-                                  fontWeight:FontWeight.w700,
-                                  color:Color(0xFF192E51),
-                                ),
+                      ),
+                      SizedBox(width: 15),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${recipe.number}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF192E51),
                               ),
-                              SizedBox(height: 5),
-                              Text(
-                                '${recipe.detail}',
-                                style:TextStyle(
-                                  fontSize:12,
-                                  fontWeight:FontWeight.w700,
-                                  color:Color(0xFF5A5A6C),
-                                ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              '${recipe.detail}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF5A5A6C),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
+                    ],
                   ),
                 );
               },
@@ -317,69 +321,32 @@ class _FoodInfoPageState extends State<FoodInfoPage> {
 
   Widget _buildDetailsContainer() {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 1,
-            offset: Offset(1, 1),
-          ),
-        ],
-      ),
-      height: 200,
-      child: Scrollbar(
-        //isAlwaysShown: true,
-        //controller: _scrollController,
-        child: GridView.builder(
-          padding: EdgeInsets.all(0), // set the padding to minimum
-          scrollDirection: Axis.vertical,
-          //controller: _scrollController,
-          itemCount: widget.food.ingredient!.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1, // set the number of items per row
-            mainAxisSpacing: 0.0, // set the vertical gap to minimum
-            crossAxisSpacing: 0.0, // set the horizontal gap to minimum
-            childAspectRatio: 7.0, // adjust this value to reduce the height
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: Row(
-                mainAxisSize: MainAxisSize
-                    .min, // make the column occupy the least space possible
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  Container(
-
-                      child: Text(
-                          widget.food.ingredient![index],
-                          style:TextStyle(
-                            fontSize:12,
-                            fontWeight:FontWeight.w500,
-                            color:Color(0xFF192E51),
-                          )
-                      )
-
-                  ),
-                  // Container(
-                  //     child: Text(
-                  //         '${widget.food.ingredients![index].quantity}',
-                  //         style:TextStyle(
-                  //           fontSize:12,
-                  //           fontWeight:FontWeight.w500,
-                  //           color:Color(0xFF192E51),
-                  //         )
-                  //     )
-                  // ),
-                ],
-              ),
-            );
-          },
+        width: MediaQuery.of(context).size.width-20,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(1, 1),
+            ),
+          ],
         ),
-      ),
-    );
+        height: 200,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(0),
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              widget.food.ingredient!,
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF192E51)),
+            ),
+          ),
+        ));
   }
 }

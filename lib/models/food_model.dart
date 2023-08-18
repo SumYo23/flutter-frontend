@@ -4,7 +4,7 @@ class Food {
   String? name;
   late int percent;
   String? status;
-  List<String>? ingredient;
+  String? ingredient;
   List<FoodRecipe>? recipes;
   List<FoodIngredient>? ingredients;
 
@@ -25,7 +25,7 @@ class Food {
     name = json['name'];
     percent = json['percent'];
     status = json['status'];
-    ingredient = List<String>.from(json['ingredient']);
+    ingredient = json['ingredient'];
     if (json['recipes'] != null) {
       recipes = List<FoodRecipe>.from(
           json['recipes'].map((x) => FoodRecipe.fromJson(x)));
