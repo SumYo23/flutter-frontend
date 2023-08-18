@@ -34,38 +34,6 @@ class IngredientRepository {
 
   }
 
-  // Future<String> addIngredient(Ingredient ingredient) async {
-  //   final url = 'http://127.0.0.1:8000/';
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse(url),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     );
-  //
-  //     if (response.statusCode != 200) {
-  //       print('Error updating ingredient1: ${response.statusCode}');
-  //     }
-  //
-  //     if (response.body.isNotEmpty) {
-  //       final extractedData = json.decode(response.body);
-  //       print(extractedData);
-  //       if (extractedData is Map && extractedData.containsKey('message')) {
-  //         return extractedData['message'];
-  //       } else {
-  //         print('No "message" key in the response');
-  //       }
-  //     } else {
-  //       print('Empty response from the server');
-  //     }
-  //   } catch (error) {
-  //     print('Error updating ingredient2: $error');
-  //   }
-  //   return "false";
-  // }
-
-
   Future<bool> addIngredient(Ingredient ingredient) async {
 
     final url = 'http://223.130.139.200/api/refrigerator/list/';
@@ -146,7 +114,7 @@ class IngredientRepository {
 
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://223.130.134.87/image_detection/'),
+      Uri.parse('http://223.130.139.200/api/ai/'),
     );
 
     request.headers.addAll({});
