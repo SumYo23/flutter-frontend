@@ -54,6 +54,7 @@ class IngredientRepository {
           'Authorization': await TOKEN,
         },
       );
+      print(await TOKEN);
 
       if (response.statusCode != 200) {
         print('Error updating ingredient1: ${response.statusCode}');

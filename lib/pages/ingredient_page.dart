@@ -38,11 +38,12 @@ class _IngredientPageState extends State<IngredientPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Consumer<IngredientProvider>(
         builder: (ctx, ingredientProvider, _) => Column(
           children: [
-            SizedBox(height: 100),
+            SizedBox(height: 50),
             Container(
               height: 115,
               padding: const EdgeInsets.only(bottom: 40.0, top: 40),
@@ -56,42 +57,35 @@ class _IngredientPageState extends State<IngredientPage> {
                 children: <Widget>[
                   Container(
                     alignment: Alignment.center,
-                    width: 110,
+                    width: (width - 30) / 3,
                     //padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      '등록순',
-                        style:TextStyle(
-                            fontSize:15,
-                            fontWeight:FontWeight.w500,
-                            color:Color(0xFF203B67),
-                        )
-                    ),
+                    child: Text('등록순',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF203B67),
+                        )),
                   ),
                   Container(
                     alignment: Alignment.center,
-                    width: 110,
+                    width: (width - 30) / 3,
                     //padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      '보유량순',
-                        style:TextStyle(
-                          fontSize:15,
-                          fontWeight:FontWeight.w500,
-                          color:Color(0xFF203B67),
-                        )
-                    ),
+                    child: Text('보유량순',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF203B67),
+                        )),
                   ),
                   Container(
                     alignment: Alignment.center,
-                    width: 110,
-                    //padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      '유통기한순',
-                        style:TextStyle(
-                          fontSize:15,
-                          fontWeight:FontWeight.w500,
-                          color:Color(0xFF203B67),
-                        )
-                    ),
+                    width: (width - 30) / 3,
+                    child: Text('유통기한순',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF203B67),
+                        )),
                   ),
                 ],
                 onPressed: (int index) {
@@ -136,15 +130,14 @@ class _IngredientPageState extends State<IngredientPage> {
                             ingredientProvider.removeIngredient(i);
                           },
                           child: ListTile(
-                            title: Text(ingredientProvider.ingredients[i].ingredient
-                                .toString(),
-                                style:TextStyle(
-                                  fontSize:15,
-                                  fontWeight:FontWeight.w700,
-                                  color:Color(0xFF203B67),
-                                )
-                            )
-                            ,
+                            title: Text(
+                                ingredientProvider.ingredients[i].ingredient
+                                    .toString(),
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF203B67),
+                                )),
                             // leading: Image.network(ingredientProvider.ingredients[i].imageUrl.toString()),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -159,11 +152,11 @@ class _IngredientPageState extends State<IngredientPage> {
                                 SizedBox(width: 8.0),
                                 Text(
                                   ingredientProvider.ingredients[i].quantity
-                                          .toString(),
-                                  style:TextStyle(
-                                    fontSize:20,
-                                    fontWeight:FontWeight.w700,
-                                    color:Color(0xFF203B67),
+                                      .toString(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF203B67),
                                   ),
                                 ),
                                 IconButton(
@@ -203,10 +196,10 @@ class _IngredientPageState extends State<IngredientPage> {
             child: Icon(Icons.camera_alt),
             label: "사진 촬영",
             labelStyle: TextStyle(
-                          fontSize:20,
-                          fontWeight:FontWeight.w500,
-                          color:Color(0xFF192E51),
-                        ),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF192E51),
+            ),
             onTap: () {
               Provider.of<IngredientProvider>(context, listen: false)
                   .captureAndUploadImage();
@@ -216,9 +209,9 @@ class _IngredientPageState extends State<IngredientPage> {
             child: Icon(Icons.edit),
             label: "직접 입력",
             labelStyle: TextStyle(
-              fontSize:20,
-              fontWeight:FontWeight.w500,
-              color:Color(0xFF192E51),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF192E51),
             ),
             onTap: () {
               showDialog(
@@ -735,24 +728,24 @@ class _IngredientInputDialogState extends State<IngredientInputDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-          '재료 추가',
-          style: TextStyle(
-          fontSize:20,
-          fontWeight:FontWeight.w700,
-          color:Color(0xFF192E51),
+        '재료 추가',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: Color(0xFF192E51),
         ),
-
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 20),
-          Text('이름',
+          const SizedBox(height: 5),
+          Text(
+            '이름',
             style: TextStyle(
-              fontSize:15,
-              fontWeight:FontWeight.w500,
-              color:Color(0xFF192E51),
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF192E51),
             ),
           ),
           Autocomplete<String>(
@@ -771,18 +764,25 @@ class _IngredientInputDialogState extends State<IngredientInputDialog> {
             fieldViewBuilder: (context, controller, focusNode, onSubmit) {
               homeTeamName = controller;
               return TextFormField(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical:10)
+                  ),
                   controller: controller, focusNode: focusNode);
             },
           ),
-          const SizedBox(height: 20),
-          Text('수량',
+          const SizedBox(height: 10),
+          Text(
+            '수량',
             style: TextStyle(
-              fontSize:15,
-              fontWeight:FontWeight.w500,
-              color:Color(0xFF192E51),
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF192E51),
             ),
           ),
           TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical:10)
+            ),
             controller: _quantityController,
             focusNode: _quantityFocusNode,
             keyboardType: TextInputType.number,
@@ -791,37 +791,34 @@ class _IngredientInputDialogState extends State<IngredientInputDialog> {
                 _quantity = int.parse(value);
               });
             },
-            //decoration: InputDecoration(labelText: '수량'),
           ),
         ],
       ),
       actions: [
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width:100,
+              width: 100,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFEAEAEA)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xFFEAEAEA)),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text(
-                  '닫기',
-                    style:TextStyle(
-                      fontSize:15,
-                      fontWeight:FontWeight.w700,
-                      color:Color(0xFF192E51),
-                    )
-                ),
+                child: Text('닫기',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF192E51),
+                    )),
               ),
             ),
-            const SizedBox(width:10),
+            const SizedBox(width: 10),
             Container(
-              width:100,
+              width: 100,
               child: ElevatedButton(
                 onPressed: () {
                   if (_ingredientName != null && _quantity > 0) {
@@ -829,24 +826,20 @@ class _IngredientInputDialogState extends State<IngredientInputDialog> {
                         .addOrUpdateIngredient(_ingredientName!, _quantity);
                     homeTeamName.clear();
                     clearField();
-                    FocusScope.of(context).requestFocus(_ingredientNameFocusNode);
+                    FocusScope.of(context)
+                        .requestFocus(_ingredientNameFocusNode);
                   }
                 },
-                child: Text(
-                    '업로드',
-                    style:TextStyle(
-                      fontSize:15,
-                      fontWeight:FontWeight.w700,
-                      color:Color(0xffFDF8F8),
-                    )
-
-                ),
+                child: Text('업로드',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xffFDF8F8),
+                    )),
               ),
             ),
           ],
-
         ),
-
       ],
     );
   }
